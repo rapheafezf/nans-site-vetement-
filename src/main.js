@@ -41,6 +41,41 @@ const PRODUCTS = [
   },
   {
     id: 5,
+    name: "Manteau Long Premium",
+    price: 350,
+    category: "Premium",
+    image: "https://images.unsplash.com/photo-1539533377285-a41fe58bc42a?auto=format&fit=crop&q=80&w=1200",
+    secondaryImage: "https://images.unsplash.com/photo-1544022613-e87ce7526ed1?auto=format&fit=crop&q=80&w=1200",
+    badge: "Exclusive"
+  },
+  {
+    id: 6,
+    name: "Hoodie Graphique",
+    price: 85,
+    category: "Nouveautés",
+    image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80&w=1200",
+    secondaryImage: "https://images.unsplash.com/photo-1509948914041-1378ad3e47e1?auto=format&fit=crop&q=80&w=1200",
+    badge: "New Drop"
+  },
+  {
+    id: 7,
+    name: "Veste en Jean",
+    price: 95,
+    category: "Soldes",
+    image: "https://images.unsplash.com/photo-1576872381149-7847515ce5d8?auto=format&fit=crop&q=80&w=1200",
+    secondaryImage: "https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?auto=format&fit=crop&q=80&w=1200",
+    badge: "-30%"
+  },
+  {
+    id: 8,
+    name: "Sac à Dos Minimaliste",
+    price: 120,
+    category: "Premium",
+    image: "https://images.unsplash.com/photo-1553062407-98eeb94c6a62?auto=format&fit=crop&q=80&w=1200",
+    secondaryImage: "https://images.unsplash.com/photo-1547949003-9792a18a2601?auto=format&fit=crop&q=80&w=1200"
+  },
+  {
+    id: 9,
     name: "Pull Cachemire Gris",
     price: 210,
     category: "Pulls",
@@ -49,7 +84,7 @@ const PRODUCTS = [
     badge: "Limited"
   },
   {
-    id: 6,
+    id: 10,
     name: "T-shirt Oversize Blanc",
     price: 55,
     category: "T-shirts",
@@ -57,7 +92,7 @@ const PRODUCTS = [
     secondaryImage: "https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&q=80&w=1200"
   },
   {
-    id: 7,
+    id: 11,
     name: "Pantalon Tailored Noir",
     price: 160,
     category: "Pantalons",
@@ -65,7 +100,7 @@ const PRODUCTS = [
     secondaryImage: "https://images.unsplash.com/photo-1582552938357-103ae9628001?auto=format&fit=crop&q=80&w=1200"
   },
   {
-    id: 8,
+    id: 12,
     name: "Casquette Vintage Navy",
     price: 40,
     category: "Casquettes",
@@ -93,24 +128,6 @@ requestAnimationFrame(update);
 // 4. GSAP REGISTER
 gsap.registerPlugin(ScrollTrigger);
 
-// 5. CUSTOM CURSOR
-const cursor = document.getElementById('custom-cursor');
-let mouseX = 0, mouseY = 0;
-let cursorX = 0, cursorY = 0;
-
-window.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-});
-
-gsap.to({}, 0.01, {
-  repeat: -1,
-  onRepeat: () => {
-    cursorX += (mouseX - cursorX) * 0.15;
-    cursorY += (mouseY - cursorY) * 0.15;
-    gsap.set(cursor, { x: cursorX, y: cursorY });
-  }
-});
 
 // Magnetic effect
 const initMagnetic = () => {
@@ -124,12 +141,10 @@ const initMagnetic = () => {
         x: x * 0.35, y: y * 0.35,
         duration: 0.5, ease: "power2.out"
       });
-      cursor.classList.add('active');
     });
 
     el.addEventListener('mouseleave', () => {
       gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
-      cursor.classList.remove('active');
     });
   });
 };
@@ -137,11 +152,9 @@ const initMagnetic = () => {
 // 6. RENDER PRODUCTS
 const productGrid = document.getElementById('product-grid');
 
-const renderProducts = (category = 'all') => {
+const renderProducts = (category = 'Nouveautés') => {
   productGrid.innerHTML = '';
-  const filtered = category === 'all' 
-    ? PRODUCTS 
-    : PRODUCTS.filter(p => p.category === category);
+  const filtered = PRODUCTS.filter(p => p.category === category);
 
   filtered.forEach((product, index) => {
     const card = document.createElement('div');
@@ -287,10 +300,10 @@ themeToggle.addEventListener('click', () => {
   localStorage.setItem('nuvia_theme', newTheme);
 });
 
-// INITIALIZE ALL
+  // INITIALIZE ALL
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
-  renderProducts();
+  renderProducts('Nouveautés');
   updateCartUI();
   initMagnetic();
 

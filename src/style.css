@@ -171,30 +171,6 @@ h1, h2, h3, .logo {
   justify-content: center;
 }
 
-/* Custom Cursor */
-#custom-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 10px;
-  height: 10px;
-  background: hsl(var(--fg));
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  mix-blend-mode: difference;
-  transition: width 0.3s var(--transition-fast), height 0.3s var(--transition-fast);
-}
-
-#custom-cursor.active {
-  width: 60px;
-  height: 60px;
-  background: hsla(var(--fg), 0.2);
-  mix-blend-mode: normal;
-  backdrop-filter: blur(5px);
-  border: 1px solid hsla(var(--fg), 0.3);
-}
 
 /* Hero */
 .hero {
