@@ -7,105 +7,105 @@ import './style.css';
 const PRODUCTS = [
   {
     id: 1,
-    name: "Pull Oversize Laine",
-    price: 145,
-    category: "Pulls",
-    image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=1200",
-    secondaryImage: "https://images.unsplash.com/photo-1556905055-8f358a7a4bb4?auto=format&fit=crop&q=80&w=1200",
-    badge: "Premium"
+    name: "Pull Collector Snake",
+    price: 185,
+    category: "Collector",
+    image: "/snake_pull.png",
+    secondaryImage: "/snake_pull.png",
+    badge: "Limited Edition"
   },
   {
     id: 2,
-    name: "T-shirt Essential Noir",
-    price: 45,
-    category: "T-shirts",
-    image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=1200",
-    secondaryImage: "https://images.unsplash.com/photo-1521572008054-962ceee9d31e?auto=format&fit=crop&q=80&w=1200"
+    name: "T-shirt Collector Snake",
+    price: 75,
+    category: "Collector",
+    image: "/snake_tshirt.png",
+    secondaryImage: "/snake_tshirt.png",
+    badge: "Popular"
   },
   {
     id: 3,
-    name: "Pantalon Cargo Beige",
-    price: 120,
-    category: "Pantalons",
-    image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&q=80&w=1200",
-    secondaryImage: "https://images.unsplash.com/photo-1584305116359-54140501f10a?auto=format&fit=crop&q=80&w=1200",
-    badge: "New"
+    name: "Pull Oversize Snake",
+    price: 145,
+    category: "Pulls",
+    image: "/snake_pull.png",
+    secondaryImage: "/snake_pull.png",
+    badge: "New Era"
   },
   {
     id: 4,
-    name: "Casquette Signature",
-    price: 35,
-    category: "Casquettes",
-    image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&q=80&w=1200",
-    secondaryImage: "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&q=80&w=1200"
+    name: "T-shirt Essential Snake",
+    price: 45,
+    category: "T-shirts",
+    image: "/snake_tshirt.png",
+    secondaryImage: "/snake_tshirt.png"
   },
   {
     id: 5,
-    name: "Manteau Long Premium",
-    price: 350,
-    category: "Premium",
-    image: "https://images.unsplash.com/photo-1539533377285-a41fe58bc42a?auto=format&fit=crop&q=80&w=1200",
-    secondaryImage: "https://images.unsplash.com/photo-1544022613-e87ce7526ed1?auto=format&fit=crop&q=80&w=1200",
-    badge: "Exclusive"
+    name: "Pantalon Cargo Snake",
+    price: 120,
+    category: "Pantalons",
+    image: "/snake_pants.png",
+    secondaryImage: "/snake_pants.png",
+    badge: "New"
   },
   {
     id: 6,
-    name: "Hoodie Graphique",
-    price: 85,
-    category: "Nouveautés",
-    image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80&w=1200",
-    secondaryImage: "https://images.unsplash.com/photo-1509948914041-1378ad3e47e1?auto=format&fit=crop&q=80&w=1200",
-    badge: "New Drop"
+    name: "Casquette Signature Snake",
+    price: 35,
+    category: "Casquettes",
+    image: "/snake_cap.png",
+    secondaryImage: "/snake_cap.png"
   },
   {
     id: 7,
-    name: "Veste en Jean",
-    price: 95,
-    category: "Soldes",
-    image: "https://images.unsplash.com/photo-1576872381149-7847515ce5d8?auto=format&fit=crop&q=80&w=1200",
-    secondaryImage: "https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?auto=format&fit=crop&q=80&w=1200",
-    badge: "-30%"
+    name: "Pull Cachemire Snake",
+    price: 210,
+    category: "Pulls",
+    image: "/snake_pull.png",
+    secondaryImage: "/snake_pull.png",
+    badge: "Exclusive"
   },
   {
     id: 8,
-    name: "Sac à Dos Minimaliste",
-    price: 120,
-    category: "Premium",
-    image: "https://images.unsplash.com/photo-1553062407-98eeb94c6a62?auto=format&fit=crop&q=80&w=1200",
-    secondaryImage: "https://images.unsplash.com/photo-1547949003-9792a18a2601?auto=format&fit=crop&q=80&w=1200"
+    name: "Hoodie Graphique Snake",
+    price: 85,
+    category: "Nouveautés",
+    image: "/snake_pull.png",
+    secondaryImage: "/snake_pull.png",
+    badge: "Top Seller"
   },
   {
     id: 9,
-    name: "Pull Cachemire Gris",
-    price: 210,
-    category: "Pulls",
-    image: "https://images.unsplash.com/photo-1611312449412-6cefac5639fd?auto=format&fit=crop&q=80&w=1200",
-    secondaryImage: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&q=80&w=1200",
-    badge: "Limited"
+    name: "Veste Signature Snake",
+    price: 165,
+    category: "Nouveautés",
+    image: "/snake_tshirt.png",
+    secondaryImage: "/snake_tshirt.png"
   },
   {
     id: 10,
-    name: "T-shirt Oversize Blanc",
+    name: "T-shirt Oversize Snake",
     price: 55,
     category: "T-shirts",
-    image: "https://images.unsplash.com/photo-1554568218-0f1715e72254?auto=format&fit=crop&q=80&w=1200",
-    secondaryImage: "https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&q=80&w=1200"
+    image: "/snake_tshirt.png",
+    secondaryImage: "/snake_tshirt.png"
   },
   {
     id: 11,
-    name: "Pantalon Tailored Noir",
+    name: "Pantalon Tailored Snake",
     price: 160,
     category: "Pantalons",
-    image: "https://images.unsplash.com/photo-1624371414361-e6e0ed26296a?auto=format&fit=crop&q=80&w=1200",
-    secondaryImage: "https://images.unsplash.com/photo-1582552938357-103ae9628001?auto=format&fit=crop&q=80&w=1200"
+    image: "/snake_pants.png",
+    secondaryImage: "/snake_pants.png"
   },
   {
     id: 12,
-    name: "Casquette Vintage Navy",
+    name: "Casquette Vintage Snake",
     price: 40,
     category: "Casquettes",
-    image: "https://images.unsplash.com/photo-1534215754734-18e55d13e346?auto=format&fit=crop&q=80&w=1200",
-    secondaryImage: "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&q=80&w=1200"
+    image: "/snake_cap.png",
+    secondaryImage: "/snake_cap.png"
   }
 ];
 
@@ -152,7 +152,7 @@ const initMagnetic = () => {
 // 6. RENDER PRODUCTS
 const productGrid = document.getElementById('product-grid');
 
-const renderProducts = (category = 'Nouveautés') => {
+const renderProducts = (category = 'Collector') => {
   productGrid.innerHTML = '';
   const filtered = PRODUCTS.filter(p => p.category === category);
 
@@ -303,7 +303,7 @@ themeToggle.addEventListener('click', () => {
   // INITIALIZE ALL
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
-  renderProducts('Nouveautés');
+  renderProducts('Collector');
   updateCartUI();
   initMagnetic();
 
