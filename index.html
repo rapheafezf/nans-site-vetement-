@@ -113,6 +113,56 @@
     margin-left: 0.4rem;
   }
 
+  /* LANGUAGE SWITCHER */
+  .lang-switcher {
+    display: flex; gap: 0.6rem;
+    margin-right: 1rem;
+    border-right: 1px solid rgba(248,245,240,0.1);
+    padding-right: 1rem;
+  }
+  .lang-btn {
+    background: none; border: none;
+    color: var(--white); font-size: 0.6rem;
+    letter-spacing: 0.1em; cursor: none;
+    opacity: 0.4; transition: opacity 0.3s, color 0.3s;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .lang-btn.active, .lang-btn:hover { opacity: 1; color: var(--gold); }
+
+  /* CATEGORY MODAL */
+  .cat-modal {
+    position: fixed; inset: 0;
+    background: rgba(10,10,10,0.98);
+    z-index: 1000;
+    display: flex; flex-direction: column;
+    padding: 6rem 3rem;
+    transform: translateY(100%);
+    transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+    overflow-y: auto;
+  }
+  .cat-modal.open { transform: translateY(0); }
+  .cat-modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 4rem;
+  }
+  .cat-modal-close {
+    background: none; border: 1px solid rgba(248,245,240,0.2);
+    color: var(--white); padding: 0.8rem 1.5rem;
+    font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+    cursor: none; transition: background 0.3s;
+  }
+  .cat-modal-close:hover { background: rgba(248,245,240,0.05); }
+  .cat-modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem; font-weight: 300;
+  }
+  .cat-modal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+
   /* HERO */
   .hero {
     height: 100vh; position: relative;
@@ -639,24 +689,35 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-follower" id="cursorFollower"></div>
 
+<!-- CATEGORY MODAL -->
+<div class="cat-modal" id="catModal">
+  <div class="cat-modal-header">
+    <h2 class="cat-modal-title" id="catModalTitle">Category</h2>
+    <button class="cat-modal-close" onclick="closeCatModal()">Fermer / Close</button>
+  </div>
+  <div class="cat-modal-grid" id="catModalGrid">
+    <!-- Products injected by JS -->
+  </div>
+</div>
+
 <!-- CART OVERLAY -->
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
 
 <!-- CART DRAWER -->
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-header">
-    <h3>Votre Panier</h3>
+    <h3 data-t="cart_title">Votre Panier</h3>
     <button class="cart-close" onclick="closeCart()">✕</button>
   </div>
   <div class="cart-items" id="cartItems">
-    <p class="cart-empty">Votre panier est vide</p>
+    <p class="cart-empty" data-t="cart_empty">Votre panier est vide</p>
   </div>
   <div class="cart-footer">
     <div class="cart-total">
-      <span>Sous-total</span>
+      <span data-t="cart_subtotal">Sous-total</span>
       <span id="cartTotal">0 €</span>
     </div>
-    <button class="checkout-btn">Passer à la Caisse</button>
+    <button class="checkout-btn" data-t="cart_checkout">Passer à la Caisse</button>
   </div>
 </div>
 
@@ -670,14 +731,20 @@
 <nav id="navbar">
   <a href="#" class="nav-logo">NUVIA</a>
   <ul class="nav-links">
-    <li><a href="#shop">Collection</a></li>
-    <li><a href="#lookbook">Lookbook</a></li>
-    <li><a href="#about">Philosophie</a></li>
-    <li><a href="#footer">Contact</a></li>
+    <li><a href="#shop" data-t="nav_collection">Collection</a></li>
+    <li><a href="#lookbook" data-t="nav_lookbook">Lookbook</a></li>
+    <li><a href="#about" data-t="nav_about">Philosophie</a></li>
+    <li><a href="#footer" data-t="nav_contact">Contact</a></li>
   </ul>
   <div class="nav-actions">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="switchLanguage('fr')">FR</button>
+      <button class="lang-btn" onclick="switchLanguage('en')">EN</button>
+      <button class="lang-btn" onclick="switchLanguage('es')">ES</button>
+      <button class="lang-btn" onclick="switchLanguage('de')">DE</button>
+    </div>
     <button class="cart-btn" onclick="openCart()">
-      Panier <span class="cart-count" id="cartCount">0</span>
+      <span data-t="nav_cart">Panier</span> <span class="cart-count" id="cartCount">0</span>
     </button>
   </div>
 </nav>
@@ -686,14 +753,14 @@
 <section class="hero" id="hero">
   <div class="hero-bg"></div>
   <div class="hero-content">
-    <p class="hero-eyebrow">Collection Printemps / Été 2025</p>
-    <h1>Élégance<br><em>Intemporelle</em></h1>
-    <p class="hero-sub">Redéfinissez votre style avec notre collection premium minimaliste</p>
-    <a href="#shop" class="btn-primary">Découvrir</a>
-    <a href="#lookbook" class="btn-secondary">Lookbook</a>
+    <p class="hero-eyebrow" data-t="hero_eyebrow">Collection Printemps / Été 2025</p>
+    <h1 data-t="hero_h1">Élégance<br><em>Intemporelle</em></h1>
+    <p class="hero-sub" data-t="hero_sub">Redéfinissez votre style avec notre collection premium minimaliste</p>
+    <a href="#shop" class="btn-primary" data-t="hero_btn_discover">Découvrir</a>
+    <a href="#lookbook" class="btn-secondary" data-t="hero_btn_lookbook">Lookbook</a>
   </div>
   <div class="hero-scroll">
-    <span>Défiler</span>
+    <span data-t="hero_scroll">Défiler</span>
     <div class="scroll-line"></div>
   </div>
 </section>
@@ -720,47 +787,47 @@
 
 <!-- CATEGORIES -->
 <section class="categories-section reveal" id="categories">
-  <p class="section-label">Explorer</p>
-  <h2 class="section-title">Nos <em>Univers</em></h2>
+  <p class="section-label" data-t="cat_label">Explorer</p>
+  <h2 class="section-title" data-t="cat_title">Nos <em>Univers</em></h2>
   <div class="categories-grid">
-    <div class="cat-card">
+    <div class="cat-card" onclick="openCatModal('nouveau')">
       <img src="assets/hero_snake.png" alt="Nouvelle Collection">
       <div class="cat-overlay">
-        <p class="cat-tag">En vedette</p>
-        <p class="cat-name">Nouvelle Collection</p>
-        <p class="cat-count">24 pièces</p>
+        <p class="cat-tag" data-t="cat_tag_featured">En vedette</p>
+        <p class="cat-name" data-t="cat_name_new">Nouvelle Collection</p>
+        <p class="cat-count">24 <span data-t="cat_pieces">pièces</span></p>
       </div>
     </div>
-    <div class="cat-card">
+    <div class="cat-card" onclick="openCatModal('essentiel')">
       <img src="assets/pull_snake.png" alt="Pulls">
       <div class="cat-overlay">
-        <p class="cat-tag">Essentiels</p>
-        <p class="cat-name">Pulls & Tricots</p>
-        <p class="cat-count">12 pièces</p>
+        <p class="cat-tag" data-t="cat_tag_essentials">Essentiels</p>
+        <p class="cat-name" data-t="cat_name_pulls">Pulls & Tricots</p>
+        <p class="cat-count">12 <span data-t="cat_pieces">pièces</span></p>
       </div>
     </div>
-    <div class="cat-card">
+    <div class="cat-card" onclick="openCatModal('signature')">
       <img src="assets/tshirt_snake.png" alt="T-shirts">
       <div class="cat-overlay">
-        <p class="cat-tag">Signature</p>
-        <p class="cat-name">T-shirts</p>
-        <p class="cat-count">18 pièces</p>
+        <p class="cat-tag" data-t="cat_tag_signature">Signature</p>
+        <p class="cat-name" data-t="cat_name_tshirts">T-shirts</p>
+        <p class="cat-count">18 <span data-t="cat_pieces">pièces</span></p>
       </div>
     </div>
-    <div class="cat-card">
+    <div class="cat-card" onclick="openCatModal('accessoire')">
       <img src="assets/cap_snake.png" alt="Casquettes">
       <div class="cat-overlay">
-        <p class="cat-tag">Accessoires</p>
-        <p class="cat-name">Casquettes</p>
-        <p class="cat-count">8 pièces</p>
+        <p class="cat-tag" data-t="cat_tag_accessories">Accessoires</p>
+        <p class="cat-name" data-t="cat_name_caps">Casquettes</p>
+        <p class="cat-count">8 <span data-t="cat_pieces">pièces</span></p>
       </div>
     </div>
-    <div class="cat-card">
+    <div class="cat-card" onclick="openCatModal('collector')">
       <img src="assets/collector_verification.png" alt="Edition Collector">
       <div class="cat-overlay">
-        <p class="cat-tag">Limité</p>
-        <p class="cat-name">Édition Collector</p>
-        <p class="cat-count">6 pièces</p>
+        <p class="cat-tag" data-t="cat_tag_limited">Limité</p>
+        <p class="cat-name" data-t="cat_name_collector">Édition Collector</p>
+        <p class="cat-count">6 <span data-t="cat_pieces">pièces</span></p>
       </div>
     </div>
   </div>
@@ -770,16 +837,16 @@
 <section class="products-section" id="shop">
   <div class="products-header reveal">
     <div>
-      <p class="section-label">Boutique</p>
-      <h2 class="section-title">Nos <em>Pièces</em></h2>
+      <p class="section-label" data-t="shop_label">Boutique</p>
+      <h2 class="section-title" data-t="shop_title">Nos <em>Pièces</em></h2>
       <div class="products-filters">
-        <button class="filter-btn active" data-filter="all">Tout</button>
-        <button class="filter-btn" data-filter="nouveau">Nouveautés</button>
-        <button class="filter-btn" data-filter="collector">Collector</button>
-        <button class="filter-btn" data-filter="essentiel">Essentiels</button>
+        <button class="filter-btn active" data-filter="all" data-t="filter_all">Tout</button>
+        <button class="filter-btn" data-filter="nouveau" data-t="filter_new">Nouveautés</button>
+        <button class="filter-btn" data-filter="collector" data-t="filter_collector">Collector</button>
+        <button class="filter-btn" data-filter="essentiel" data-t="filter_essentials">Essentiels</button>
       </div>
     </div>
-    <a href="#" class="view-all-link">Voir tout →</a>
+    <a href="#" class="view-all-link" data-t="shop_view_all">Voir tout →</a>
   </div>
 
   <div class="products-grid" id="productsGrid">
@@ -794,30 +861,30 @@
     <div class="philosophy-img-accent"></div>
   </div>
   <div class="reveal reveal-delay-2">
-    <p class="section-label">Notre Essence</p>
-    <h2 class="section-title">L'Art du<br><em>Minimalisme</em></h2>
-    <p class="philosophy-text">
+    <p class="section-label" data-t="phi_label">Notre Essence</p>
+    <h2 class="section-title" data-t="phi_title">L'Art du<br><em>Minimalisme</em></h2>
+    <p class="philosophy-text" data-t="phi_p1">
       NUVIA est née de la volonté de créer des pièces intemporelles qui transcendent les saisons. Chaque vêtement est conçu avec des matériaux durables et une attention méticuleuse portée aux détails — parce que le vrai luxe se ressent, il ne se montre pas.
     </p>
-    <p class="philosophy-text">
+    <p class="philosophy-text" data-t="phi_p2">
       Nous collaborons avec des artisans sélectionnés pour garantir un savoir-faire d'exception. Chaque pièce est une conversation entre tradition et modernité.
     </p>
     <div class="philosophy-stats">
       <div class="stat-item">
         <p class="stat-number">2018</p>
-        <p class="stat-label">Année de fondation</p>
+        <p class="stat-label" data-t="phi_stat_year">Année de fondation</p>
       </div>
       <div class="stat-item">
         <p class="stat-number">100%</p>
-        <p class="stat-label">Matières responsables</p>
+        <p class="stat-label" data-t="phi_stat_mat">Matières responsables</p>
       </div>
       <div class="stat-item">
         <p class="stat-number">12k+</p>
-        <p class="stat-label">Clients fidèles</p>
+        <p class="stat-label" data-t="phi_stat_clients">Clients fidèles</p>
       </div>
       <div class="stat-item">
         <p class="stat-number">4.9★</p>
-        <p class="stat-label">Note moyenne</p>
+        <p class="stat-label" data-t="phi_stat_rating">Note moyenne</p>
       </div>
     </div>
   </div>
@@ -826,41 +893,41 @@
 <!-- LOOKBOOK -->
 <section class="lookbook-section" id="lookbook">
   <div class="lookbook-header reveal">
-    <p class="section-label">Inspiration</p>
-    <h2 class="section-title">Le <em>Lookbook</em></h2>
+    <p class="section-label" data-t="look_label">Inspiration</p>
+    <h2 class="section-title" data-t="look_title">Le <em>Lookbook</em></h2>
   </div>
   <div class="lookbook-scroll">
     <div class="lookbook-item">
       <img src="assets/hero_snake.png" alt="Look 1">
-      <div class="lookbook-label"><span>Look 01 — Urbain</span></div>
+      <div class="lookbook-label"><span data-t="look_01">Look 01 — Urbain</span></div>
     </div>
     <div class="lookbook-item">
       <img src="assets/pull_snake.png" alt="Look 2">
-      <div class="lookbook-label"><span>Look 02 — Casual</span></div>
+      <div class="lookbook-label"><span data-t="look_02">Look 02 — Casual</span></div>
     </div>
     <div class="lookbook-item">
       <img src="assets/tshirt_snake.png" alt="Look 3">
-      <div class="lookbook-label"><span>Look 03 — Soirée</span></div>
+      <div class="lookbook-label"><span data-t="look_03">Look 03 — Soirée</span></div>
     </div>
     <div class="lookbook-item">
       <img src="assets/pants_snake.png" alt="Look 4">
-      <div class="lookbook-label"><span>Look 04 — Weekend</span></div>
+      <div class="lookbook-label"><span data-t="look_04">Look 04 — Weekend</span></div>
     </div>
     <div class="lookbook-item">
       <img src="assets/cap_snake.png" alt="Look 5">
-      <div class="lookbook-label"><span>Look 05 — Sport</span></div>
+      <div class="lookbook-label"><span data-t="look_05">Look 05 — Sport</span></div>
     </div>
   </div>
 </section>
 
 <!-- NEWSLETTER -->
 <section class="newsletter-section reveal">
-  <p class="section-label">Restez Informé</p>
-  <h2 class="section-title">Rejoignez<br><em>l'Univers NUVIA</em></h2>
-  <p>Accédez en avant-première à nos nouvelles collections, collaborations exclusives et offres privées.</p>
+  <p class="section-label" data-t="news_label">Restez Informé</p>
+  <h2 class="section-title" data-t="news_title">Rejoignez<br><em>l'Univers NUVIA</em></h2>
+  <p data-t="news_p">Accédez en avant-première à nos nouvelles collections, collaborations exclusives et offres privées.</p>
   <div class="newsletter-form">
-    <input type="email" placeholder="Votre adresse e-mail">
-    <button onclick="showToast('Bienvenue dans l\'univers NUVIA !')">S'inscrire</button>
+    <input type="email" placeholder="Votre adresse e-mail" data-t-placeholder="news_placeholder">
+    <button onclick="showToast('Bienvenue dans l\'univers NUVIA !')" data-t="news_btn">S'inscrire</button>
   </div>
 </section>
 
@@ -878,37 +945,37 @@
       </div>
     </div>
     <div class="footer-col">
-      <h4>Boutique</h4>
+      <h4 data-t="foot_shop">Boutique</h4>
       <ul>
-        <li><a href="#">Nouvelle Collection</a></li>
-        <li><a href="#">Meilleures Ventes</a></li>
-        <li><a href="#">Édition Collector</a></li>
-        <li><a href="#">Accessoires</a></li>
-        <li><a href="#">Soldes</a></li>
+        <li><a href="#" data-t="cat_name_new">Nouvelle Collection</a></li>
+        <li><a href="#" data-t="foot_bestsellers">Meilleures Ventes</a></li>
+        <li><a href="#" data-t="cat_name_collector">Édition Collector</a></li>
+        <li><a href="#" data-t="cat_name_caps">Accessoires</a></li>
+        <li><a href="#" data-t="foot_sales">Soldes</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>À Propos</h4>
+      <h4 data-t="foot_about">À Propos</h4>
       <ul>
-        <li><a href="#">Notre Histoire</a></li>
-        <li><a href="#">Engagement Durable</a></li>
-        <li><a href="#">Artisans Partenaires</a></li>
-        <li><a href="#">Presse</a></li>
+        <li><a href="#" data-t="foot_story">Notre Histoire</a></li>
+        <li><a href="#" data-t="foot_commitment">Engagement Durable</a></li>
+        <li><a href="#" data-t="foot_artisans">Artisans Partenaires</a></li>
+        <li><a href="#" data-t="foot_press">Presse</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Service Client</h4>
+      <h4 data-t="foot_service">Service Client</h4>
       <ul>
-        <li><a href="#">Livraison & Retours</a></li>
-        <li><a href="#">Guide des Tailles</a></li>
-        <li><a href="#">FAQ</a></li>
-        <li><a href="#">Nous Contacter</a></li>
+        <li><a href="#" data-t="foot_shipping">Livraison & Retours</a></li>
+        <li><a href="#" data-t="foot_sizes">Guide des Tailles</a></li>
+        <li><a href="#" data-t="foot_faq">FAQ</a></li>
+        <li><a href="#" data-t="foot_contact_us">Nous Contacter</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 NUVIA. Tous droits réservés.</p>
-    <p>Mentions légales · Confidentialité · CGV</p>
+    <p data-t="foot_copy">© 2025 NUVIA. Tous droits réservés.</p>
+    <p data-t="foot_legal">Mentions légales · Confidentialité · CGV</p>
   </div>
 </footer>
 
@@ -928,10 +995,13 @@ setInterval(() => {
   follower.style.left = fx + 'px';
   follower.style.top = fy + 'px';
 }, 16);
-document.querySelectorAll('a, button, .product-card, .cat-card').forEach(el => {
-  el.addEventListener('mouseenter', () => follower.classList.add('expand'));
-  el.addEventListener('mouseleave', () => follower.classList.remove('expand'));
-});
+function updateCursorEvents() {
+  document.querySelectorAll('a, button, .product-card, .cat-card').forEach(el => {
+    el.addEventListener('mouseenter', () => follower.classList.add('expand'));
+    el.addEventListener('mouseleave', () => follower.classList.remove('expand'));
+  });
+}
+updateCursorEvents();
 
 // NAV SCROLL
 const navbar = document.getElementById('navbar');
@@ -948,6 +1018,198 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.12 });
 reveals.forEach(r => observer.observe(r));
+
+// I18N DICTIONARY
+
+const i18n = {
+  fr: {
+    nav_collection: 'Collection', nav_lookbook: 'Lookbook', nav_about: 'Philosophie', nav_contact: 'Contact', nav_cart: 'Panier',
+    hero_eyebrow: 'Collection Printemps / Été 2025',
+    hero_h1: 'Élégance<br><em>Intemporelle</em>',
+    hero_sub: 'Redéfinissez votre style avec notre collection premium minimaliste',
+    hero_btn_discover: 'Découvrir', hero_btn_lookbook: 'Lookbook', hero_scroll: 'Défiler',
+    cat_label: 'Explorer', cat_title: 'Nos <em>Univers</em>', cat_pieces: 'pièces',
+    cat_tag_featured: 'En vedette', cat_tag_essentials: 'Essentiels', cat_tag_signature: 'Signature', cat_tag_accessories: 'Accessoires', cat_tag_limited: 'Limité',
+    cat_name_new: 'Nouvelle Collection', cat_name_pulls: 'Pulls & Tricots', cat_name_tshirts: 'T-shirts', cat_name_caps: 'Casquettes', cat_name_collector: 'Édition Collector',
+    shop_label: 'Boutique', shop_title: 'Nos <em>Pièces</em>', shop_view_all: 'Voir tout →',
+    filter_all: 'Tout', filter_new: 'Nouveautés', filter_collector: 'Collector', filter_essentials: 'Essentiels',
+    phi_label: 'Notre Essence', phi_title: 'L\'Art du<br><em>Minimalisme</em>',
+    phi_p1: 'NUVIA est née de la volonté de créer des pièces intemporelles qui transcendent les saisons. Chaque vêtement est conçu avec des matériaux durables et une attention méticuleuse portée aux détails.',
+    phi_p2: 'Nous collaborons avec des artisans sélectionnés pour garantir un savoir-faire d\'exception. Chaque pièce est une conversation entre tradition et modernité.',
+    phi_stat_year: 'Année de fondation', phi_stat_mat: 'Matières responsables', phi_stat_clients: 'Clients fidèles', phi_stat_rating: 'Note moyenne',
+    look_label: 'Inspiration', look_title: 'Le <em>Lookbook</em>',
+    look_01: 'Look 01 — Urbain', look_02: 'Look 02 — Casual', look_03: 'Look 03 — Soirée', look_04: 'Look 04 — Weekend', look_05: 'Look 05 — Sport',
+    news_label: 'Restez Informé', news_title: 'Rejoignez<br><em>l\'Univers NUVIA</em>',
+    news_p: 'Accédez en avant-première à nos nouvelles collections, collaborations exclusives et offres privées.',
+    news_placeholder: 'Votre adresse e-mail', news_btn: 'S\'inscrire',
+    foot_shop: 'Boutique', foot_bestsellers: 'Meilleures Ventes', foot_sales: 'Soldes',
+    foot_about: 'À Propos', foot_story: 'Notre Histoire', foot_commitment: 'Engagement Durable', foot_artisans: 'Artisans Partenaires', foot_press: 'Presse',
+    foot_service: 'Service Client', foot_shipping: 'Livraison & Retours', foot_sizes: 'Guide des Tailles', foot_faq: 'FAQ', foot_contact_us: 'Nous Contacter',
+    foot_copy: '© 2025 NUVIA. Tous droits réservés.', foot_legal: 'Mentions légales · Confidentialité · CGV',
+    cart_title: 'Votre Panier', cart_empty: 'Votre panier est vide', cart_subtotal: 'Sous-total', cart_checkout: 'Passer à la Caisse',
+    add_to_cart: 'Ajouter au Panier'
+  },
+  en: {
+    nav_collection: 'Collection', nav_lookbook: 'Lookbook', nav_about: 'Philosophy', nav_contact: 'Contact', nav_cart: 'Cart',
+    hero_eyebrow: 'Spring / Summer 2025 Collection',
+    hero_h1: 'Timeless<br><em>Elegance</em>',
+    hero_sub: 'Redefine your style with our premium minimalist collection',
+    hero_btn_discover: 'Discover', hero_btn_lookbook: 'Lookbook', hero_scroll: 'Scroll',
+    cat_label: 'Explore', cat_title: 'Our <em>Worlds</em>', cat_pieces: 'items',
+    cat_tag_featured: 'Featured', cat_tag_essentials: 'Essentials', cat_tag_signature: 'Signature', cat_tag_accessories: 'Accessories', cat_tag_limited: 'Limited',
+    cat_name_new: 'New Collection', cat_name_pulls: 'Sweaters & Knits', cat_name_tshirts: 'T-shirts', cat_name_caps: 'Caps', cat_name_collector: 'Collector Edition',
+    shop_label: 'Shop', shop_title: 'Our <em>Pieces</em>', shop_view_all: 'View all →',
+    filter_all: 'All', filter_new: 'New In', filter_collector: 'Collector', filter_essentials: 'Essentials',
+    phi_label: 'Our Essence', phi_title: 'The Art of<br><em>Minimalism</em>',
+    phi_p1: 'NUVIA was born from the desire to create timeless pieces that transcend seasons. Each garment is designed with sustainable materials and meticulous attention to detail.',
+    phi_p2: 'We collaborate with selected artisans to guarantee exceptional craftsmanship. Each piece is a conversation between tradition and modernity.',
+    phi_stat_year: 'Founded In', phi_stat_mat: 'Sustainable Materials', phi_stat_clients: 'Loyal Clients', phi_stat_rating: 'Average Rating',
+    look_label: 'Inspiration', look_title: 'The <em>Lookbook</em>',
+    look_01: 'Look 01 — Urban', look_02: 'Look 02 — Casual', look_03: 'Look 03 — Evening', look_04: 'Look 04 — Weekend', look_05: 'Look 05 — Sport',
+    news_label: 'Stay Informed', news_title: 'Join the<br><em>NUVIA Universe</em>',
+    news_p: 'Get early access to our new collections, exclusive collaborations and private offers.',
+    news_placeholder: 'Your email address', news_btn: 'Subscribe',
+    foot_shop: 'Shop', foot_bestsellers: 'Bestsellers', foot_sales: 'Sales',
+    foot_about: 'About', foot_story: 'Our Story', foot_commitment: 'Sustainability', foot_artisans: 'Partner Artisans', foot_press: 'Press',
+    foot_service: 'Customer Service', foot_shipping: 'Shipping & Returns', foot_sizes: 'Size Guide', foot_faq: 'FAQ', foot_contact_us: 'Contact Us',
+    foot_copy: '© 2025 NUVIA. All rights reserved.', foot_legal: 'Legal · Privacy · Terms',
+    cart_title: 'Your Cart', cart_empty: 'Your cart is empty', cart_subtotal: 'Subtotal', cart_checkout: 'Checkout',
+    add_to_cart: 'Add to Cart'
+  },
+  es: {
+    nav_collection: 'Colección', nav_lookbook: 'Lookbook', nav_about: 'Filosofía', nav_contact: 'Contacto', nav_cart: 'Carrito',
+    hero_eyebrow: 'Colección Primavera / Verano 2025',
+    hero_h1: 'Elegancia<br><em>Atemporal</em>',
+    hero_sub: 'Redefine tu estilo con nuestra colección premium minimalista',
+    hero_btn_discover: 'Descubrir', hero_btn_lookbook: 'Lookbook', hero_scroll: 'Desplazar',
+    cat_label: 'Explorar', cat_title: 'Nuestros <em>Universos</em>', cat_pieces: 'piezas',
+    cat_tag_featured: 'Destacado', cat_tag_essentials: 'Esenciales', cat_tag_signature: 'Firma', cat_tag_accessories: 'Accesorios', cat_tag_limited: 'Limitado',
+    cat_name_new: 'Nueva Colección', cat_name_pulls: 'Jerseis y Punto', cat_name_tshirts: 'Camisetas', cat_name_caps: 'Gorras', cat_name_collector: 'Edición Coleccionista',
+    shop_label: 'Tienda', shop_title: 'Nuestras <em>Piezas</em>', shop_view_all: 'Ver todo →',
+    filter_all: 'Todo', filter_new: 'Novedades', filter_collector: 'Coleccionista', filter_essentials: 'Esenciales',
+    phi_label: 'Nuestra Esencia', phi_title: 'El Arte del<br><em>Minimalismo</em>',
+    phi_p1: 'NUVIA nació del deseo de crear piezas atemporales que trasciendan las estaciones. Cada prenda está diseñada con materiales sostenibles y una atención meticulosa al detalle.',
+    phi_p2: 'Colaboramos con artesanos seleccionados para garantizar una artesanía excepcional. Cada pieza es una conversación entre tradición y modernidad.',
+    phi_stat_year: 'Año de fundación', phi_stat_mat: 'Materiales responsables', phi_stat_clients: 'Clientes fieles', phi_stat_rating: 'Nota media',
+    look_label: 'Inspiración', look_title: 'El <em>Lookbook</em>',
+    look_01: 'Look 01 — Urbano', look_02: 'Look 02 — Casual', look_03: 'Look 03 — Noche', look_04: 'Look 04 — Fin de semana', look_05: 'Look 05 — Deporte',
+    news_label: 'Mantente Informado', news_title: 'Únete al<br><em>Universo NUVIA</em>',
+    news_p: 'Obtén acceso anticipado a nuestras nuevas colecciones, colaboraciones exclusivas y ofertas privadas.',
+    news_placeholder: 'Tu correo electrónico', news_btn: 'Suscribirse',
+    foot_shop: 'Tienda', foot_bestsellers: 'Más Vendidos', foot_sales: 'Rebajas',
+    foot_about: 'Sobre Nosotros', foot_story: 'Nuestra Historia', foot_commitment: 'Compromiso Sostenible', foot_artisans: 'Artesanos Socios', foot_press: 'Prensa',
+    foot_service: 'Servicio al Cliente', foot_shipping: 'Envío y Devoluciones', foot_sizes: 'Guía de Tallas', foot_faq: 'FAQ', foot_contact_us: 'Contáctanos',
+    foot_copy: '© 2025 NUVIA. Todos los derechos reservados.', foot_legal: 'Legal · Privacidad · Términos',
+    cart_title: 'Tu Carrito', cart_empty: 'Tu carrito está vacío', cart_subtotal: 'Subtotal', cart_checkout: 'Pagar',
+    add_to_cart: 'Añadir al Carrito'
+  },
+  de: {
+    nav_collection: 'Kollektion', nav_lookbook: 'Lookbook', nav_about: 'Philosophie', nav_contact: 'Kontakt', nav_cart: 'Warenkorb',
+    hero_eyebrow: 'Frühjahr / Sommer 2025 Kollektion',
+    hero_h1: 'Zeitlose<br><em>Eleganz</em>',
+    hero_sub: 'Definieren Sie Ihren Stil neu mit unserer Premium-Minimalist-Kollektion',
+    hero_btn_discover: 'Entdecken', hero_btn_lookbook: 'Lookbook', hero_scroll: 'Scrollen',
+    cat_label: 'Entdecken', cat_title: 'Unsere <em>Welten</em>', cat_pieces: 'Stücke',
+    cat_tag_featured: 'Vorgestellt', cat_tag_essentials: 'Basics', cat_tag_signature: 'Signatur', cat_tag_accessories: 'Accessoires', cat_tag_limited: 'Limitiert',
+    cat_name_new: 'Neue Kollektion', cat_name_pulls: 'Pullover & Strick', cat_name_tshirts: 'T-Shirts', cat_name_caps: 'Kappen', cat_name_collector: 'Sammleredition',
+    shop_label: 'Shop', shop_title: 'Unsere <em>Stücke</em>', shop_view_all: 'Alle ansehen →',
+    filter_all: 'Alle', filter_new: 'Neuheiten', filter_collector: 'Sammler', filter_essentials: 'Basics',
+    phi_label: 'Unsere Essenz', phi_title: 'Die Kunst des<br><em>Minimalismus</em>',
+    phi_p1: 'NUVIA wurde aus dem Wunsch heraus geboren, zeitlose Stücke zu schaffen, die Jahreszeiten überdauern. Jedes Kleidungsstück wird mit nachhaltigen Materialien und Liebe zum Detail entworfen.',
+    phi_p2: 'Wir arbeiten mit ausgewählten Handwerkern zusammen, um außergewöhnliche Handwerkskunst zu garantieren. Jedes Stück ist ein Dialog zwischen Tradition und Moderne.',
+    phi_stat_year: 'Gründungsjahr', phi_stat_mat: 'Nachhaltige Materialien', phi_stat_clients: 'Treue Kunden', phi_stat_rating: 'Durchschnittsnote',
+    look_label: 'Inspiration', look_title: 'Das <em>Lookbook</em>',
+    look_01: 'Look 01 — Urban', look_02: 'Look 02 — Casual', look_03: 'Look 03 — Abend', look_04: 'Look 04 — Wochenende', look_05: 'Look 05 — Sport',
+    news_label: 'Informiert bleiben', news_title: 'Werden Sie Teil<br><em>des NUVIA-Universums</em>',
+    news_p: 'Erhalten Sie frühen Zugang zu unseren neuen Kollektionen, exklusiven Kooperationen und privaten Angeboten.',
+    news_placeholder: 'Ihre E-Mail-Adresse', news_btn: 'Abonnieren',
+    foot_shop: 'Shop', foot_bestsellers: 'Bestseller', foot_sales: 'Sale',
+    foot_about: 'Über uns', foot_story: 'Unsere Geschichte', foot_commitment: 'Nachhaltigkeit', foot_artisans: 'Partnerhandwerker', foot_press: 'Presse',
+    foot_service: 'Kundenservice', foot_shipping: 'Versand & Rückgabe', foot_sizes: 'Größentabelle', foot_faq: 'FAQ', foot_contact_us: 'Kontaktiere uns',
+    foot_copy: '© 2025 NUVIA. Alle Rechte vorbehalten.', foot_legal: 'Impressum · Datenschutz · AGB',
+    cart_title: 'Warenkorb', cart_empty: 'Ihr Warenkorb ist leer', cart_subtotal: 'Zwischensumme', cart_checkout: 'Zur Kasse',
+    add_to_cart: 'In den Warenkorb'
+  }
+};
+
+let currentLang = 'fr';
+
+function switchLanguage(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${lang}'`));
+  });
+  
+  // Update regular text
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.dataset.t;
+    if (i18n[lang][key]) {
+      el.innerHTML = i18n[lang][key];
+    }
+  });
+
+  // Update placeholders
+  document.querySelectorAll('[data-t-placeholder]').forEach(el => {
+    const key = el.dataset.tPlaceholder;
+    if (i18n[lang][key]) {
+      el.placeholder = i18n[lang][key];
+    }
+  });
+
+  renderProducts(currentFilter);
+}
+
+// PARALLAX HERO
+window.addEventListener('scroll', () => {
+  const hero = document.getElementById('hero');
+  if (!hero) return;
+  const bg = hero.querySelector('.hero-bg');
+  if (bg) bg.style.transform = `scale(1) translateY(${window.scrollY * 0.3}px)`;
+});
+
+
+// CATEGORY MODAL LOGIC
+function openCatModal(catKey) {
+  const modal = document.getElementById('catModal');
+  const title = document.getElementById('catModalTitle');
+  const grid = document.getElementById('catModalGrid');
+  
+  let filter = 'all';
+  let titleKey = '';
+  
+  switch(catKey) {
+    case 'nouveau': filter = 'nouveau'; titleKey = 'cat_name_new'; break;
+    case 'essentiel': filter = 'essentiel'; titleKey = 'cat_name_pulls'; break;
+    case 'signature': filter = 'collector'; titleKey = 'cat_name_tshirts'; break; // Map to collector for snake
+    case 'accessoire': filter = 'collector'; titleKey = 'cat_name_caps'; break;
+    case 'collector': filter = 'collector'; titleKey = 'cat_name_collector'; break;
+  }
+  
+  title.textContent = i18n[currentLang][titleKey] || titleKey;
+  
+  const filtered = products.filter(p => filter === 'all' || p.category === filter);
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card reveal visible">
+      <div class="product-img-wrap">
+        <img src="${p.img}" alt="${p.name}">
+        <div class="product-actions">
+          <button class="add-cart-btn" onclick="addToCart(${p.id})">${i18n[currentLang].add_to_cart}</button>
+        </div>
+      </div>
+      <p class="product-brand">NUVIA</p>
+      <p class="product-name">${p.name}</p>
+      <p class="product-price">${p.price} €</p>
+    </div>
+  `).join('');
+  
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCatModal() {
+  document.getElementById('catModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
 
 // PRODUCTS DATA
 const products = [
@@ -983,8 +1245,8 @@ function renderProducts(filter) {
         <img src="${p.img}" alt="${p.name}" loading="lazy">
         ${p.badge ? `<span class="product-badge ${p.badge === 'New' ? 'new' : ''}">${p.badge}</span>` : ''}
         <div class="product-actions">
-          <button class="add-cart-btn" onclick="addToCart(${p.id})">Ajouter au Panier</button>
-          <button class="wishlist-btn" onclick="showToast('Ajouté à vos favoris')">♡</button>
+          <button class="add-cart-btn" onclick="addToCart(${p.id})">${i18n[currentLang].add_to_cart}</button>
+          <button class="wishlist-btn" onclick="showToast('Ajouté')">♡</button>
         </div>
       </div>
       <p class="product-brand">NUVIA</p>
@@ -996,6 +1258,7 @@ function renderProducts(filter) {
     </div>
   `).join('');
 }
+
 
 renderProducts('all');
 
