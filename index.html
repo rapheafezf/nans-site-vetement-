@@ -1174,20 +1174,37 @@ function openCatModal(catKey) {
   const title = document.getElementById('catModalTitle');
   const grid = document.getElementById('catModalGrid');
   
-  let filter = 'all';
   let titleKey = '';
+  let filtered = [];
   
   switch(catKey) {
-    case 'nouveau': filter = 'nouveau'; titleKey = 'cat_name_new'; break;
-    case 'essentiel': filter = 'essentiel'; titleKey = 'cat_name_pulls'; break;
-    case 'signature': filter = 'collector'; titleKey = 'cat_name_tshirts'; break; // Map to collector for snake
-    case 'accessoire': filter = 'collector'; titleKey = 'cat_name_caps'; break;
-    case 'collector': filter = 'collector'; titleKey = 'cat_name_collector'; break;
+    case 'nouveau': 
+      filtered = products.filter(p => p.badge === 'New');
+      titleKey = 'cat_name_new'; 
+      break;
+    case 'essentiel': 
+      filtered = products.filter(p => p.category === 'essentiel');
+      titleKey = 'cat_name_pulls'; 
+      break;
+    case 'signature': 
+      filtered = products.filter(p => p.category === 'signature');
+      titleKey = 'cat_name_tshirts'; 
+      break;
+    case 'accessoire': 
+      filtered = products.filter(p => p.category === 'accessoire');
+      titleKey = 'cat_name_caps'; 
+      break;
+    case 'collector': 
+      filtered = products.filter(p => p.category === 'collector');
+      titleKey = 'cat_name_collector'; 
+      break;
+    default:
+      filtered = products;
+      titleKey = 'nav_collection';
   }
   
-  title.textContent = i18n[currentLang][titleKey] || titleKey;
+  title.innerHTML = i18n[currentLang][titleKey] || titleKey;
   
-  const filtered = products.filter(p => filter === 'all' || p.category === filter);
   grid.innerHTML = filtered.map(p => `
     <div class="product-card reveal visible">
       <div class="product-img-wrap">
@@ -1204,7 +1221,9 @@ function openCatModal(catKey) {
   
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
+  updateCursorEvents(); // Re-bind cursor events for new cards
 }
+
 
 function closeCatModal() {
   document.getElementById('catModal').classList.remove('open');
@@ -1213,16 +1232,16 @@ function closeCatModal() {
 
 // PRODUCTS DATA
 const products = [
-  { id: 1, name: 'Pull Collector Snake', price: 185, category: 'collector', badge: 'Collector',
+  { id: 1, name: 'Pull Collector Snake', price: 185, category: 'essentiel', badge: 'Collector',
     img: 'assets/pull_snake.png',
     sizes: ['S','M','L'] },
-  { id: 2, name: 'T-shirt Logo Snake', price: 75, category: 'collector', badge: 'New',
+  { id: 2, name: 'T-shirt Logo Snake', price: 75, category: 'signature', badge: 'New',
     img: 'assets/tshirt_snake.png',
     sizes: ['S','M','L','XL'] },
   { id: 3, name: 'Pantalon Cargo Snake', price: 145, category: 'collector', badge: 'Collector',
     img: 'assets/pants_snake.png',
     sizes: ['S','M','L'] },
-  { id: 4, name: 'Casquette Signature', price: 65, category: 'collector', badge: 'New',
+  { id: 4, name: 'Casquette Signature', price: 65, category: 'accessoire', badge: 'New',
     img: 'assets/cap_snake.png',
     sizes: ['UNI'] },
   { id: 5, name: 'Pull Angora Ivory', price: 185, category: 'essentiel', badge: null,
@@ -1232,6 +1251,7 @@ const products = [
     img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=600',
     sizes: ['S','M','L','XL'] },
 ];
+
 
 let cart = [];
 let currentFilter = 'all';
